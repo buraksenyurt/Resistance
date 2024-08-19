@@ -1,0 +1,6 @@
+@Resistance.TestApi_HostAddress = http://localhost:5225
+
+GET {{Resistance.TestApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

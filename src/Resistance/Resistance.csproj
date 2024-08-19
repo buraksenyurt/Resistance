@@ -12,7 +12,7 @@
     <TargetFrameworks Condition="'$(LibraryFrameworks)'!=''">$(LibraryFrameworks)</TargetFrameworks>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>resilience;webApi;distributedSystems;simulation;middleware;aspNet;dotNetCore</PackageTags>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Burak Selim Şenyurt</Authors>
     <Description>A few Middleware functionality for Asp.Net Web Api Projects to simulate Resiliance problems</Description>
     <TargetFramework>net8.0</TargetFramework>
