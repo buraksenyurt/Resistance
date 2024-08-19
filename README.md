@@ -69,3 +69,7 @@ curl -X 'GET' \
   'http://localhost:5225/getSalary' \
   -H 'accept: */*'
 ```
+
+For example, when the Network Failure behavior is enabled, one of the expected results should be as follows.
+
+![image](https://github.com/user-attachments/assets/d03f2f1b-1f7a-4c6e-9e74-2af4be0b88b8)
