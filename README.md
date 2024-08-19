@@ -31,6 +31,9 @@ By default, all simulation behaviors are disabled. These values ​​can be ena
 Code example;
 
 ```csharp
+// For appSettings based options
+builder.Services.Configure<ResistanceFlags>(builder.Configuration.GetSection("ResistanceFlags"));
+
 app.UseResistance(new ResistanceOptions
 {
     // Network Failure (HTTP 500 Internal Service Error with %25 probility)
@@ -52,4 +55,17 @@ app.UseResistance(new ResistanceOptions
         MaxDelayMs = TimeSpan.FromMilliseconds(2500)
     }
 });
+```
+
+## Test App
+
+Resistance.Test Api application can be used to test Nuget package. After referencing the package from Nuget repo, tests can be performed with Swagger interface or Postman or simple Curl command.
+
+```bash
+dotnet run
+
+# The port address may differ
+curl -X 'GET' \
+  'http://localhost:5225/getSalary' \
+  -H 'accept: */*'
 ```

@@ -31,6 +31,9 @@ By default, all simulation behaviors are disabled. These values ​​can be ena
 Code example;
 
 ```csharp
+// For appSettings based options
+builder.Services.Configure<ResistanceFlags>(builder.Configuration.GetSection("ResistanceFlags"));
+
 app.UseResistance(new ResistanceOptions
 {
     // Network Failure (HTTP 500 Internal Service Error with %25 probility)
