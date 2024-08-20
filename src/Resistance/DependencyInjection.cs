@@ -4,6 +4,7 @@ using Resistance.Behavior.Latency;
 using Resistance.Behavior.NetworkFailure;
 using Resistance.Behavior.Outage;
 using Resistance.Behavior.ResourceRace;
+using Resistance.Behavior.Inconsistency;
 
 namespace Resistance;
 
