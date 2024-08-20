@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resistance", "src\Resistanc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resistance.TestApi", "src\Resistance.TestApi\Resistance.TestApi.csproj", "{A6BDFD5F-90BD-40C1-917D-B47FEA7D5379}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resistance.TestClient", "src\Resistance.TestClient\Resistance.TestClient.csproj", "{492022C6-2F7C-4DC6-A139-76115845C197}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +28,14 @@ Global
 		{A6BDFD5F-90BD-40C1-917D-B47FEA7D5379}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6BDFD5F-90BD-40C1-917D-B47FEA7D5379}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6BDFD5F-90BD-40C1-917D-B47FEA7D5379}.Release|Any CPU.Build.0 = Release|Any CPU
+		{492022C6-2F7C-4DC6-A139-76115845C197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{492022C6-2F7C-4DC6-A139-76115845C197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{492022C6-2F7C-4DC6-A139-76115845C197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{492022C6-2F7C-4DC6-A139-76115845C197}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F40E3DB5-2CCB-4D0F-AEC3-7690C01C7DAB} = {D6ED0160-8EBF-4C32-B7A1-B939A17E655D}
 		{A6BDFD5F-90BD-40C1-917D-B47FEA7D5379} = {D6ED0160-8EBF-4C32-B7A1-B939A17E655D}
+		{492022C6-2F7C-4DC6-A139-76115845C197} = {D6ED0160-8EBF-4C32-B7A1-B939A17E655D}
 	EndGlobalSection
 EndGlobal
