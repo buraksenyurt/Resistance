@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System.Text.Json;
-using System.Text;
 using Microsoft.Extensions.Options;
 using Resistance.Configuration;
 
@@ -40,7 +38,7 @@ public class DataInconsistencyBehavior(
         var responseBody = await new StreamReader(responseBodyStream).ReadToEndAsync();
         responseBodyStream.Seek(0, SeekOrigin.Begin);
 
-        if (isInconsistent && context.Response.ContentType == "application/json")
+        if (isInconsistent)
         {
             _logger.LogError("Simulating Data Inconsistency");
             responseBody = AddSomething(responseBody);
@@ -53,28 +51,12 @@ public class DataInconsistencyBehavior(
     {
         try
         {
-            using var jsonDocument = JsonDocument.Parse(originalData);
-            var jsonObject = jsonDocument.RootElement.Clone();
-
-            using var stream = new MemoryStream();
-            using (var writer = new Utf8JsonWriter(stream))
-            {
-                writer.WriteStartObject();
-
-                foreach (var property in jsonObject.EnumerateObject())
-                {
-                    property.WriteTo(writer);
-                }
-
-                writer.WriteString("Message", "You Shall Not Pass !!!");
-                writer.WriteEndObject();
-            }
-
-            return Encoding.UTF8.GetString(stream.ToArray());
+            var modifiedData = $"{originalData}{Environment.NewLine}\"Message\": \"You Shall Not Pass !!!\"";
+            return modifiedData;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error while adding extra json data.");
+            _logger.LogError(ex, "Error while adding extra data.");
             return originalData;
         }
     }
