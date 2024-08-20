@@ -38,11 +38,16 @@ app.UseResistance(new ResistanceOptions
 {
     // Network Failure (HTTP 500 Internal Service Error with %25 probility)
     NetworkFailureProbability = NetworkFailureProbability.Percent25,
-    // Produce HTTP 429 Too Many Request scenario with 3 concurrent request
-    ResourceRaceUpperLimit = 3,
-    // Manipulating response data with %20 probability
+    // For 5 requests coming from the same IP every 10 seconds, the HTTP 429 Too Many Requests scenario is generated.
+    ResourceRacePeriod = new ResourceRacePeriod
+    {
+        DueTime = TimeSpan.FromSeconds(5),
+        Period = TimeSpan.FromSeconds(5),
+        RequestLimit = 5
+    },
+    // Manipulating response data with %50 probability
     DataInconsistencyProbability = DataInconsistencyProbability.Percent20,
-    // Produce HTTP 503 Service Unavailable 10 seconds every minute
+    // Produce HTTP 503 Service Unavailable 10 seconds per minute
     OutagePeriod = new OutagePeriod
     {
         Duration = TimeSpan.FromSeconds(10),
@@ -72,6 +77,36 @@ curl -X 'GET' \
 
 For example, when the Network Failure behavior is enabled, one of the expected results should be as follows.
 
-![image](https://github.com/user-attachments/assets/d03f2f1b-1f7a-4c6e-9e74-2af4be0b88b8)
+![Postman Sample](https://github.com/user-attachments/assets/d03f2f1b-1f7a-4c6e-9e74-2af4be0b88b8)
 
 The tests performed with the Console application are as follows.
+
+### Outage Test
+
+The service is down for 10 seconds every minute.
+
+![Outage sample](https://github.com/user-attachments/assets/14758868-68d4-4f3d-81e3-76a4c91a1475)
+
+### Network Failure Test
+
+HTTP 500 Internal Service Error error is returned with a 25% probability.
+
+![Network Failure Sample](https://github.com/user-attachments/assets/dc31002c-7bb4-4034-aaec-84aec943ab0e)
+
+### Latency Test
+
+There will be a delay in service response times.
+
+![Latency Sample](https://github.com/user-attachments/assets/bb75d6dd-9810-47c6-9358-aa704c579f95)
+
+### Data Inconsistency Test
+
+Service response data is manipulated with a certain probability value.
+
+![Data Inconsistency Sample](https://github.com/user-attachments/assets/377163ae-e416-4c4e-add6-f044762524e7)
+
+### Resource Race Test
+
+The service returns HTTP code 429, indicating that it has received too many requests. For 5 requests coming from the same IP every 10 seconds, the HTTP 429 Too Many Requests scenario is generated.
+
+![Resource Race Sample](https://github.com/user-attachments/assets/8e0a271a-44b3-4745-98ad-8ade9dfac5d8)

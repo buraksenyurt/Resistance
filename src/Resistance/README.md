@@ -38,11 +38,16 @@ app.UseResistance(new ResistanceOptions
 {
     // Network Failure (HTTP 500 Internal Service Error with %25 probility)
     NetworkFailureProbability = NetworkFailureProbability.Percent25,
-    // Produce HTTP 429 Too Many Request scenario with 3 concurrent request
-    ResourceRaceUpperLimit = 3,
-    // Manipulating response data with %20 probability
+    // For 5 requests coming from the same IP every 10 seconds, the HTTP 429 Too Many Requests scenario is generated.
+    ResourceRacePeriod = new ResourceRacePeriod
+    {
+        DueTime = TimeSpan.FromSeconds(5),
+        Period = TimeSpan.FromSeconds(5),
+        RequestLimit = 5
+    },
+    // Manipulating response data with %50 probability
     DataInconsistencyProbability = DataInconsistencyProbability.Percent20,
-    // Produce HTTP 503 Service Unavailable 10 seconds every minute
+    // Produce HTTP 503 Service Unavailable 10 seconds per minute
     OutagePeriod = new OutagePeriod
     {
         Duration = TimeSpan.FromSeconds(10),
