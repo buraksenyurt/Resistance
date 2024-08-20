@@ -14,7 +14,7 @@ public static class DependencyInjection
     {
         app.UseMiddleware<NetworkFailureBehavior>(options.NetworkFailureProbability);
         app.UseMiddleware<LatencyBehavior>(options.LatencyPeriod);
-        app.UseMiddleware<ResourceRaceBehavior>(options.ResourceRaceUpperLimit);
+        app.UseMiddleware<ResourceRaceBehavior>(options.ResourceRacePeriod);
         app.UseMiddleware<OutageBehavior>(options.OutagePeriod);
         app.UseMiddleware<DataInconsistencyBehavior>(options.DataInconsistencyProbability);
 

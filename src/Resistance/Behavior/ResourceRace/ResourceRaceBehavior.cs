@@ -2,22 +2,26 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Resistance.Configuration;
+using System.Collections.Concurrent;
 using System.Net;
 
 namespace Resistance.Behavior.ResourceRace;
 public class ResourceRaceBehavior
 {
     private readonly RequestDelegate _next;
-    private static SemaphoreSlim _semaphore = new(2);
     private readonly ILogger<ResourceRaceBehavior> _logger;
     private readonly IOptionsMonitor<ResistanceFlags> _optionsMonitor;
+    private readonly ConcurrentDictionary<string, int> _requestCounts = new();
+    private static Timer? _resetTimer;
+    private readonly ResourceRacePeriod _period;
 
-    public ResourceRaceBehavior(RequestDelegate next, IOptionsMonitor<ResistanceFlags> optionsMonitor, ILogger<ResourceRaceBehavior> logger, ushort upperLimit)
+    public ResourceRaceBehavior(RequestDelegate next, IOptionsMonitor<ResistanceFlags> optionsMonitor, ILogger<ResourceRaceBehavior> logger, ResourceRacePeriod period)
     {
         _next = next;
-        _semaphore = new SemaphoreSlim(upperLimit);
         _logger = logger;
         _optionsMonitor = optionsMonitor;
+        _period = period;
+        _resetTimer = new Timer(ResetCounts, null, period.DueTime, period.Period);
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -28,21 +32,21 @@ public class ResourceRaceBehavior
             return;
         }
 
-        if (!await _semaphore.WaitAsync(0))
+        var key = context.Connection.RemoteIpAddress.ToString();
+        _requestCounts.AddOrUpdate(key, 1, (k, v) => v + 1);
+
+        if (_requestCounts[key] > _period.RequestLimit)
         {
             _logger.LogError("Simulated TooManyRequest(HTTP 429)");
             context.Response.StatusCode = (int)HttpStatusCode.TooManyRequests;
             await context.Response.WriteAsync("Simulated resource contention.");
             return;
         }
+        await _next(context);
+    }
 
-        try
-        {
-            await _next(context);
-        }
-        finally
-        {
-            _semaphore.Release();
-        }
+    private void ResetCounts(object? state)
+    {
+        _requestCounts.Clear();
     }
 }
