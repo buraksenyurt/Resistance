@@ -8,7 +8,7 @@ In distributed systems, it is important that the whole is durable. The functions
 
 - Latency: Generating delays in service response times. For example delaying the response by 500 to 2500 milliseconds.
 - Resource Race: Simulating receiving too many requests.
-- Outage: Providing service interruption for certain periods of time. For example, a service outage of ten seconds per minute.
+- Outage: Providing service interruption for certain periods of time. For example, a service outage of ten seconds in every minute.
 - Network Failure: It ensures that HTTP 500 is returned based on a certain percentage of service calls. For example, service response times are delayed randomly by 500 to 2500 milliseconds.
 - Data Inconsistency: Data corruption on the response body. For example, adding text-based information to the body of every second response.
 
@@ -40,9 +40,9 @@ app.UseResistance(new ResistanceOptions
     NetworkFailureProbability = NetworkFailureProbability.Percent25,
     // Produce HTTP 429 Too Many Request scenario with 3 concurrent request
     ResourceRaceUpperLimit = 3,
-    // Manipulating response data with %50 probability
+    // Manipulating response data with %20 probability
     DataInconsistencyProbability = DataInconsistencyProbability.Percent20,
-    // Produce HTTP 503 Service Unavailable 10 seconds per minute
+    // Produce HTTP 503 Service Unavailable 10 seconds every minute
     OutagePeriod = new OutagePeriod
     {
         Duration = TimeSpan.FromSeconds(10),
@@ -59,7 +59,7 @@ app.UseResistance(new ResistanceOptions
 
 ## Test App
 
-Resistance.Test Api application can be used to test Nuget package. After referencing the package from Nuget repo, tests can be performed with Swagger interface or Postman or simple Curl command.
+Resistance.Test Api application can be used to test Nuget package. After referencing the package from Nuget repo, tests can be performed with Swagger interface or Postman, simple Curl command or Resistance.TestClient console application(Suggested).
 
 ```bash
 dotnet run
@@ -73,3 +73,5 @@ curl -X 'GET' \
 For example, when the Network Failure behavior is enabled, one of the expected results should be as follows.
 
 ![image](https://github.com/user-attachments/assets/d03f2f1b-1f7a-4c6e-9e74-2af4be0b88b8)
+
+The tests performed with the Console application are as follows.

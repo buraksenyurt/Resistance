@@ -8,7 +8,7 @@ In distributed systems, it is important that the whole is durable. The functions
 
 - Latency: Generating delays in service response times. For example delaying the response by 500 to 2500 milliseconds.
 - Resource Race: Simulating receiving too many requests.
-- Outage: Providing service interruption for certain periods of time. For example, a service outage of ten seconds per minute.
+- Outage: Providing service interruption for certain periods of time. For example, a service outage of ten seconds in every minute.
 - Network Failure: It ensures that HTTP 500 is returned based on a certain percentage of service calls. For example, service response times are delayed randomly by 500 to 2500 milliseconds.
 - Data Inconsistency: Data corruption on the response body. For example, adding text-based information to the body of every second response.
 
@@ -40,9 +40,9 @@ app.UseResistance(new ResistanceOptions
     NetworkFailureProbability = NetworkFailureProbability.Percent25,
     // Produce HTTP 429 Too Many Request scenario with 3 concurrent request
     ResourceRaceUpperLimit = 3,
-    // Manipulating response data with %50 probability
+    // Manipulating response data with %20 probability
     DataInconsistencyProbability = DataInconsistencyProbability.Percent20,
-    // Produce HTTP 503 Service Unavailable 10 seconds per minute
+    // Produce HTTP 503 Service Unavailable 10 seconds every minute
     OutagePeriod = new OutagePeriod
     {
         Duration = TimeSpan.FromSeconds(10),
