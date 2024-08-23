@@ -9,7 +9,7 @@ In distributed systems, it is important that the whole is durable. The functions
 - Latency: Generating delays in service response times. For example delaying the response by 500 to 2500 milliseconds.
 - Resource Race: Simulating receiving too many requests.
 - Outage: Providing service interruption for certain periods of time. For example, a service outage of ten seconds in every minute.
-- Network Failure: It ensures that HTTP 500 is returned based on a certain percentage of service calls. For example, service response times are delayed randomly by 500 to 2500 milliseconds.
+- Network Failure: It ensures that HTTP 500 is returned based on a certain percentage of service calls.
 - Data Inconsistency: Data corruption on the response body. For example, adding text-based information to the body of every second response.
 
 ## Usage
